@@ -29,6 +29,32 @@
  */
 class Solution {
     public int findMinDifference(List<String> timePoints) {
-        
+        boolean[] timeArr = new boolean[1440];
+
+        for (String s : timePoints) {
+            String[] t = s.split(":");
+            int hr = Integer.parseInt(t[0]);
+            int mn = Integer.parseInt(t[1]);
+            if (timeArr[60 * hr + mn]) return 0;
+            else timeArr[60 * hr + mn] = true;
+        }
+
+        int res = Integer.MAX_VALUE;
+        int cur = -1;
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < 1440; i++) {
+            if (timeArr[i]) {
+                min = Math.min(min, i);
+                max = Math.max(max, i);
+                if (cur == -1) cur = i;
+                else {
+                    res = Math.min(res, i - cur);
+                    cur = i;
+                }
+            }
+        }
+        res = Math.min(1440 - max + min, res);
+        return res;
     }
 }
