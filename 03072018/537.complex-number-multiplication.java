@@ -46,6 +46,12 @@
  */
 class Solution {
     public String complexNumberMultiply(String a, String b) {
-        
+        String[] A = a.split("\\+|i");
+        String[] B = b.split("\\+|i");
+        int p = Integer.parseInt(A[0]);
+        int q = Integer.parseInt(A[1]);
+        int r = Integer.parseInt(B[0]);
+        int s = Integer.parseInt(B[1]);
+        return String.valueOf(p * r - q * s) + "+" + String.valueOf(p * s + r * q) + "i";
     }
 }

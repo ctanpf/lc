@@ -22,15 +22,31 @@
  * decoded to the original URL.
  */
 public class Codec {
+    String baseURL = "http://tinyurl.com/";
+    String key = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    Random rand = new Random();
+    HashMap<String, String> map = new HashMap<>();
+
+    public String getRandom() {
+        String end = "";
+        for (int i = 0; i < 6; i++) {
+            end += key.charAt(rand.nextInt(key.length()));
+        }
+        return end;
+    }
 
     // Encodes a URL to a shortened URL.
     public String encode(String longUrl) {
-        
+        String end = getRandom();
+        while (map.containsKey(end)) end = getRandom();
+        map.put(end, longUrl);
+        return baseURL + end;
     }
 
     // Decodes a shortened URL to its original URL.
     public String decode(String shortUrl) {
-        
+        shortUrl = shortUrl.replace(baseURL, "");
+        return map.get(shortUrl);
     }
 }
 
