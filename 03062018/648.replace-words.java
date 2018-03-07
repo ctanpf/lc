@@ -49,7 +49,50 @@
  * 
  */
 class Solution {
+    class TrieNode {
+        char val;
+        boolean isWord;
+        TrieNode[] children;
+
+        public TrieNode(char val) {
+            this.val = val;
+            this.isWord = false;
+            this.children = new TrieNode[26];
+        }
+    }
+
+    public TrieNode buildTrie(List<String> dict) {
+        TrieNode root = new TrieNode( ' ');
+        for (String s : dict) {
+            TrieNode cur = root;
+            for (char c : s.toCharArray()) {
+                if (cur.children[c - 'a'] == null) cur.children[c - 'a'] = new TrieNode(c);
+                cur = cur.children[c - 'a'];
+            }
+            cur.isWord = true;
+        }
+        return root;
+    }
+
+    public String getShortestString(TrieNode root, String s) {
+        TrieNode cur = root;
+        StringBuilder res = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (cur.children[c - 'a'] != null) {
+                res.append(c);
+                if (cur.children[c - 'a'].isWord) return res.toString();
+                else cur = cur.children[c - 'a'];
+            }
+            else return s;
+        }
+        return s;
+    }
     public String replaceWords(List<String> dict, String sentence) {
-        
+        TrieNode root = buildTrie(dict);
+        String[] tokens = sentence.split(" ");
+        for (int i = 0; i < tokens.length; i++) {
+            tokens[i] = getShortestString(root, tokens[i]);
+        }
+        return String.join(" ", tokens);
     }
 }

@@ -59,6 +59,30 @@
  */
 class Solution {
     public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
-        
+        PriorityQueue<int[]> capital = new PriorityQueue<>(new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b) {
+                return a[0] - b[0];
+            }
+        });
+
+        PriorityQueue<int[]> profit = new PriorityQueue<>(new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b) {
+                return b[1] - a[1];
+            }
+        });
+
+        for (int i = 0; i < Profits.length; i++) {
+            int[] capprof = new int[]{Capital[i], Profits[i]};
+            capital.offer(capprof);
+        }
+
+        for (int i = 0; i < k; i++) {
+            while (!capital.isEmpty() && capital.peek()[0] <= W) profit.offer(capital.poll());
+            if (profit.isEmpty()) break;
+            W += profit.poll()[1];
+        }
+        return W;
     }
 }
