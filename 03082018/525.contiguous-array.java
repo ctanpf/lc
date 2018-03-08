@@ -37,6 +37,16 @@
  */
 class Solution {
     public int findMaxLength(int[] nums) {
-        
+        if (nums.length == 0) return 0;
+        int res = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int cur = 0;
+        for (int i = 0; i < nums.length; i++) {
+            cur += nums[i] == 1 ? 1 : -1;
+            if (map.containsKey(cur)) res = Math.max(res, i - map.get(cur));
+            else map.put(cur, i);
+        }
+        return res;
     }
 }
