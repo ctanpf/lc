@@ -51,6 +51,24 @@
  */
 class Solution {
     public TreeNode str2tree(String s) {
-        
+        if (s.length() == 0) return null;
+        Stack<TreeNode> st = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == ')') st.pop();
+            if (c == '-' || c >= '0' && c <= '9') {
+                int j = i;
+                while (i + 1 < s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') i++;
+                TreeNode node = new TreeNode(Integer.parseInt(
+                    s.substring(j, i + 1)
+                ));
+                if (!st.isEmpty()) {
+                    if (st.peek().left == null) st.peek().left = node;
+                    else st.peek().right = node;
+                }
+                st.push(node);
+            }
+        }
+        return st.isEmpty() ? null : st.peek();
     }
 }

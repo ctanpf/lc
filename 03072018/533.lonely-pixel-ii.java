@@ -58,6 +58,29 @@
  */
 class Solution {
     public int findBlackPixel(char[][] picture, int N) {
-        
+        HashMap<String, Integer> map = new HashMap<>();
+        int[] col = new int[picture[0].length];
+        for (char[] arr : picture) {
+            String s = "";
+            int count = 0;
+            for (int i = 0; i < arr.length; i++) {
+                s += arr[i];
+                if (arr[i] == 'B') {
+                    count++;
+                    col[i]++;
+                }
+            }
+            if (count == N) map.put(s, map.getOrDefault(s, 0) + 1);
+        }   
+
+        int res = 0;
+        for (String s : map.keySet()) {
+            if (map.get(s) == N) {
+                for (int i = 0; i < picture[0].length; i++) {
+                    if (s.charAt(i) == 'B' && col[i] == N) res += N;
+                }
+            }
+        }
+        return res;
     }
 }
