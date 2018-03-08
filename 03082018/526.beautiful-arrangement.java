@@ -43,7 +43,24 @@
  * 
  */
 class Solution {
+    int res = 0;
     public int countArrangement(int N) {
-        
+        int[] arr = new int[N + 1];
+        recur(arr, 1, new boolean[N + 1], N);
+        return res;
+    }
+
+    public void recur(int[] arr, int idx, boolean[] visited, int N) {
+        if (idx == arr.length) {
+            ++res;
+            return;
+        }
+        for (int i = 1; i <= N; i++) {
+            if (!visited[i] && (i % idx == 0 || idx % i == 0)) {
+                visited[i] = true;
+                recur(arr, idx + 1, visited, N);
+                visited[i] = false;
+            }
+        }
     }
 }
