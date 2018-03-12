@@ -38,6 +38,24 @@
  */
 class Solution {
     public int findMinArrowShots(int[][] points) {
-        
+        if (points == null || points.length == 0) return 0;
+        Arrays.sort(points, new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b) {
+                return a[0] - b[0];
+            }
+        });
+        int res = 0;
+        int end = points[0][1];
+        for (int i = 1; i < points.length; i++) {
+            if (end < points[i][0]) {
+                res++;
+                end = points[i][1];
+            }
+            else {
+                end = Math.min(end, points[i][1]);
+            }
+        }
+        return ++res;
     }
 }
