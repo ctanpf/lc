@@ -34,6 +34,23 @@
  */
 class Solution {
     public List<List<Integer>> findSubsequences(int[] nums) {
-        
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        find(nums, new ArrayList<>(), res, 0);
+        return res;
+    }
+
+    public void find(int[] nums, List<Integer> tmp, List<List<Integer>> res, int idx) {
+        if (tmp.size() > 1) res.add(new ArrayList<>(tmp));
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = idx; i < nums.length; i++) {
+            if (set.contains(nums[i])) continue;
+            if (tmp.size() == 0 || tmp.get(tmp.size() - 1) <= nums[i]) {
+                set.add(nums[i]);
+                tmp.add(nums[i]);
+                find(nums, tmp, res, i + 1);
+                tmp.remove(tmp.size() - 1);
+            }
+        }
     }
 }
