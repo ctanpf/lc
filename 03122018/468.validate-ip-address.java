@@ -86,6 +86,55 @@
  */
 class Solution {
     public String validIPAddress(String IP) {
-        
+        if (isIPv4(IP)) return "IPv4";
+        if (isIPv6(IP)) return "IPv6";
+        return "Neither";
+    }
+
+    public boolean validIPv4Token(String t) {
+        if (t.length() == 0) return false;
+        if (t.length() != 1 && t.charAt(0) == '0') return false;
+        if (t.charAt(0) == '-') return false;
+        try {
+            int val = Integer.parseInt(t);
+            return val >= 0 && val <= 255;
+        } catch (NumberFormatException e) {
+            return false;
+        } 
+    }
+
+    public boolean validIPv6Token(String t) {
+        if (t.length() == 0) return false;
+        if (t.length() > 4) return false;
+        for (char c : t.toCharArray()) {
+            if (
+                ! (
+                    (c >= '0' && c <= '9') ||
+                    (c >= 'A' && c <= 'F') || 
+                    (c >= 'a' && c <= 'f')
+                )
+            ) return false;
+        }
+        return true;
+    }
+
+    public boolean isIPv4(String ip) {
+        if (ip.length() > 0 && ip.charAt(ip.length() - 1) == '.') return false;
+        String[] tokens = ip.split("\\.");
+        if (tokens.length != 4) return false;
+        for (String t : tokens) {
+            if (!validIPv4Token(t)) return false;
+        }
+        return true;
+    }
+
+    public boolean isIPv6(String ip) {
+        if (ip.length() > 0 && ip.charAt(ip.length() - 1) == ':') return false;
+        String[] tokens = ip.split(":");
+        if (tokens.length != 8) return false;
+        for (String t : tokens) {
+            if (!validIPv6Token(t)) return false;
+        }
+        return true;
     }
 }

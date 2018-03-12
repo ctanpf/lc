@@ -49,6 +49,32 @@
  */
 class Solution {
     public boolean makesquare(int[] nums) {
-        
+        if (nums == null || nums.length == 0) return false;
+        int sum = 0;
+        for (int n : nums) sum += n;
+        if (sum % 4 != 0) return false;
+        Arrays.sort(nums);
+        int i = 0;
+        int j = nums.length - 1;
+        while (i < j) {
+            int tmp = nums[i];
+            nums[i++] = nums[j];
+            nums[j--] = tmp;
+        }
+        return check(nums, new int[4], 0, sum/4);
+    }
+
+    public boolean check(int[] nums, int[] arr, int idx, int target) {
+        if (idx == nums.length) {
+            if (arr[0] == target && arr[1] == target && arr[2] == target && arr[3] == target) return true;
+            else return false;
+        }
+        for (int i = 0; i < 4; i++) {
+            if (arr[i] + nums[idx] > target) continue;
+            arr[i] += nums[idx];
+            if (check(nums, arr, idx + 1, target)) return true;
+            arr[i] -= nums[idx];
+        }
+        return false;
     }
 }

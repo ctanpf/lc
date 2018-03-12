@@ -78,6 +78,28 @@
  */
 class Solution {
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
-        
+        if (maze == null || maze.length == 0) return false;
+        return check(maze, start, destination, new boolean[maze.length][maze[0].length]);
+    }
+
+    public boolean check(int[][] maze, int[] start, int[] dest, boolean[][] visited) {
+        if (visited[start[0]][start[1]]) return false;
+        if (Arrays.equals(start, dest)) return true;
+        visited[start[0]][start[1]] = true;
+        int[][] dirs = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+        for (int[] d : dirs) {
+            int x = start[0];
+            int y = start[1];
+            while (validPos(maze, x + d[0], y + d[1]) && maze[x + d[0]][y + d[1]] != 1) {
+                x += d[0];
+                y += d[1];
+            }
+            if (check(maze, new int[]{x, y}, dest, visited)) return true;
+        }
+        return false;
+    }
+
+    public boolean validPos(int[][] maze, int x, int y) {
+        return (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length);
     }
 }
