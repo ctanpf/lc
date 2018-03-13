@@ -26,6 +26,18 @@
  */
 class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
-        
+        int i = 0;
+        int j = 0;
+        int[] map = new int[256];
+        int size = 0;
+        int res = 0;
+        for (j = 0; j < s.length(); j++) {
+            if (map[s.charAt(j)]++ == 0) size++;
+            while (size > k) {
+                if (--map[s.charAt(i++)] == 0) size--;
+            }
+            res = Math.max(res, j - i + 1);
+        }
+        return res;
     }
 }

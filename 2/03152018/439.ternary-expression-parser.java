@@ -74,6 +74,23 @@
  */
 class Solution {
     public String parseTernary(String expression) {
-        
+        Stack<Character> st = new Stack<>();
+        for (int i = expression.length() - 1; i >= 0; i--) {
+            char c = expression.charAt(i);
+            if (c == 'T' && !st.isEmpty() && st.peek() == '?') {
+                st.pop();
+                char a = st.pop();
+                char b = st.pop();
+                st.push(a);
+            }
+            else if (c == 'F' && !st.isEmpty() && st.peek() == '?') {
+                st.pop();
+                char a = st.pop();
+                char b = st.pop();
+                st.push(b);
+            }
+            else if (c != ':') st.push(c);
+        }
+        return String.valueOf(st.peek());
     }
 }
