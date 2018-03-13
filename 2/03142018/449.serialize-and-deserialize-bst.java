@@ -42,12 +42,40 @@ public class Codec {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        
+        if (root == null) return "";
+        StringBuilder sb = new StringBuilder();
+        Stack<TreeNode> st = new Stack<>();
+        st.push(root);
+        while (!st.isEmpty()) {
+            TreeNode node = st.pop();
+            sb.append(node.val);
+            sb.append(',');
+            if (node.right != null) st.push(node.right);
+            if (node.left != null) st.push(node.left);
+        }
+        return sb.toString().substring(0, sb.toString().length() - 1);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        
+        if (data == null || data.length() == 0) return null;
+        String[] arr = data.split(",");
+        Queue<Integer> q = new LinkedList<>();
+        for (String s : arr) {
+            q.offer(Integer.parseInt(s));
+        }
+        return getTree(q);
+    }
+
+    public TreeNode getTree(Queue<Integer> q) {
+        if (q.isEmpty()) return null;
+        TreeNode node = new TreeNode(q.poll());
+        Queue<Integer> smaller = new LinkedList<>();
+        while (!q.isEmpty() && q.peek() < node.val) smaller.offer(q.poll());
+        node.left = getTree(smaller);
+        node.right = getTree(q);
+        return node;
+
     }
 }
 

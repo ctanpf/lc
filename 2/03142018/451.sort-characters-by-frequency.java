@@ -57,6 +57,21 @@
  */
 class Solution {
     public String frequencySort(String s) {
-        
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
+        StringBuilder[] arr = new StringBuilder[s.length() + 1];
+        for (Character c : map.keySet()) {
+            char[] tmp = new char[map.get(c)];
+            Arrays.fill(tmp, c);
+            if (arr[map.get(c)] == null) arr[map.get(c)] = new StringBuilder();
+            arr[map.get(c)].append(tmp);
+        }
+        StringBuilder res = new StringBuilder();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            if (arr[i] != null) {
+                res.append(arr[i].toString());
+            }
+        }
+        return res.toString();
     }
 }
