@@ -42,6 +42,24 @@
  */
 class Solution {
     public int countBattleships(char[][] board) {
-        
+        int res = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 'X') res += check(board, i, j);
+            }
+        }
+        return res;
+    }
+
+    public int check(char[][] board, int i, int j) {
+        int x = i + 1;
+        int y = j + 1;
+        if (x >= board.length && y >= board[0].length) return 1;
+        if (x < board.length && y < board[0].length) {
+            return (board[i][y] != 'X' && board[x][j] != 'X') ? 1 : 0;
+        }
+        if (x < board.length) return (board[x][j] != 'X') ? 1 : 0;
+        if (y < board[0].length) return (board[i][y] != 'X') ? 1 : 0;
+        return 0;
     }
 }
