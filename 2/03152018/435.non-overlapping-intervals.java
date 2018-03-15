@@ -74,12 +74,11 @@ class Solution {
                 return a.start == b.start ? a.start - b.start : a.end - b.end;
             }
         });
-        int i = 0;
-        int j = 0;
+
         int res = 0;
         int end = intervals[0].end;
-        for (j = 1; j < intervals.length; j++) {
-            Interval next = intervals[j];
+        for (int i = 1; i < intervals.length; i++) {
+            Interval next = intervals[i];
             if (end > next.start) {
                 res++;
             }

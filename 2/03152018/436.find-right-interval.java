@@ -76,6 +76,34 @@
  */
 class Solution {
     public int[] findRightInterval(Interval[] intervals) {
-        
+        if (intervals == null || intervals.length == 0) return new int[]{};
+
+        int[] start = new int[intervals.length];
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < intervals.length; i++) {
+            start[i] = intervals[i].start;
+            map.put(intervals[i].start, i);
+        }
+
+        Arrays.sort(start);
+        int[] res = new int[intervals.length];
+        for (int i = 0; i < intervals.length; i++) {
+            int st = binSearch(start, intervals[i].end);
+            if (intervals[i].end > st) res[i] = -1;
+            else res[i] = map.get(st);
+        }
+        return res;
+    }
+
+    public int binSearch(int[] start, int val) {
+        int i = 0;
+        int j = start.length - 1;
+        while (i < j) {
+            int mid = i + (j - i)/2;
+            if (val > start[mid]) i = mid + 1;
+            else j = mid;
+        }
+        return start[i];
     }
 }
