@@ -49,6 +49,18 @@
  */
 class Solution {
     public int characterReplacement(String s, int k) {
-        
+        int res = 0;
+        int max = 0;
+        int i = 0;
+        int j = 0;
+        int[] map = new int[26];
+        for (j = 0; j < s.length(); j++) {
+            max = Math.max(max, ++map[s.charAt(j) - 'A']);
+            while (j - i + 1 - max > k) {
+                --map[s.charAt(i++) - 'A'];
+            }
+            res = Math.max(res, j - i + 1);
+        }
+        return res;
     }
 }

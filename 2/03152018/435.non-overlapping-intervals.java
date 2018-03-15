@@ -67,6 +67,26 @@
  */
 class Solution {
     public int eraseOverlapIntervals(Interval[] intervals) {
-        
+        if (intervals == null || intervals.length == 0) return 0;
+        Arrays.sort(intervals, new Comparator<Interval>(){
+            @Override
+            public int compare(Interval a, Interval b) {
+                return a.start == b.start ? a.start - b.start : a.end - b.end;
+            }
+        });
+        int i = 0;
+        int j = 0;
+        int res = 0;
+        int end = intervals[0].end;
+        for (j = 1; j < intervals.length; j++) {
+            Interval next = intervals[j];
+            if (end > next.start) {
+                res++;
+            }
+            else {
+                end = Math.max(end, next.end);
+            }
+        }
+        return res;
     }
 }
