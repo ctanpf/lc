@@ -50,6 +50,28 @@
  */
 class Solution {
     public String removeKdigits(String num, int k) {
-        
+        if (num == null || num.length() == 0 || k >= num.length() ) return "0";
+        StringBuilder sb = new StringBuilder();
+        Stack<Character> st = new Stack<>();
+        int i = 0;
+        while (i < num.length()) {
+            while (i < num.length() && k > 0 && !st.isEmpty() && st.peek() > num.charAt(i)) {
+                --k;
+                st.pop();
+            }
+            st.push(num.charAt(i++));
+        }
+
+        while (k != 0) {
+            st.pop();
+            --k;
+        }
+
+        while (!st.isEmpty()) sb.append(st.pop());
+        String tmp = sb.reverse().toString();
+        i = 0;
+        while (i < tmp.length() && tmp.charAt(i) == '0') i++;
+        String res = tmp.substring(i);
+        return res.length() == 0 ? "0" : res;
     }
 }

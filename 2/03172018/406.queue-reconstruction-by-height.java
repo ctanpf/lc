@@ -33,6 +33,20 @@
  */
 class Solution {
     public int[][] reconstructQueue(int[][] people) {
-        
+        if (people == null || people.length == 0) return people;
+        Arrays.sort(people, new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b) {
+                return a[0] == b[0] ? a[1] - b[1] : b[0] - a[0];
+            }
+        });
+        List<int[]> tmp = new ArrayList<>();
+        for (int[] p : people) tmp.add(p[1], p);
+        int[][] res = new int[people.length][2];
+        for (int i = 0; i < tmp.size(); i++) {
+            res[i][0] = tmp.get(i)[0];
+            res[i][1] = tmp.get(i)[1];
+        }
+        return res;
     }
 }
