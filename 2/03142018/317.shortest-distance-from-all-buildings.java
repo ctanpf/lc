@@ -36,6 +36,61 @@
  */
 class Solution {
     public int shortestDistance(int[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int[][] distance = new int[m][n];
+        int[][] reach = new int[m][n];
+        int building = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    building++;
+                    bfs(grid, distance, reach, i, j);
+                }
+            }
+        }
+
+        int res = Integer.MAX_VALUE;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0 && distance[i][j] != 0 && reach[i][j] == building) {
+                    res = Math.min(res, distance[i][j]);
+                }
+            }
+        }
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    public void bfs(int[][] grid, int[][] distance, int[][] reach, int i, int j) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int lvl = 1;
         
+        int[][] dirs = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+        boolean[][] visited = new boolean[m][n];
+
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{i, j});
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int idx = 0; idx < size; idx++) {
+                int[] cur = q.poll();
+                for (int[] d : dirs) {
+                    int x = cur[0] + d[0];
+                    int y = cur[1] + d[1];
+                    if (x >= 0 && x < m && y >= 0 && y < n && !visited[x][y] && grid[x][y] == 0) {
+                        distance[x][y] += lvl;
+                        reach[x][y]++;
+                        visited[x][y] = true;
+                        q.offer(new int[]{x, y});
+                    }
+                }
+            }
+            lvl++;
+        }
     }
 }
