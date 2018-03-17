@@ -59,6 +59,37 @@
  */
 class Solution {
     public List<Integer> numIslands2(int m, int n, int[][] positions) {
-        
+        List<Integer> res = new ArrayList<>();
+        if (positions == null || positions.length == 0) return res;
+        int count = 0;
+        int[] roots = new int[m * n];
+        Arrays.fill(roots, -1);
+
+        int[][] dirs = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+        for (int[] p : positions) {
+            int root = n * p[0] + p[1];
+            roots[root] = root;
+            count++;
+
+            for (int[] d : dirs) {
+                int x = p[0] + d[0];
+                int y = p[1] + d[1];
+                int newRoot = n * x + y;
+                if (x < 0 || x > m - 1 || y < 0 || y > n - 1 || roots[newRoot] == -1) continue;
+                int rootNb = findRoot(roots, newRoot);
+                if (root != rootNb) {
+                    roots[root] = rootNb;
+                    root = rootNb;
+                    count--;
+                }
+            }
+            res.add(count);
+        }
+        return res;
+    }
+
+    public int findRoot(int[] roots, int id) {
+        while (id != roots[id]) id = roots[id];
+        return id;
     }
 }

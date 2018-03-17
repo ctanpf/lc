@@ -27,6 +27,28 @@
  */
 class Solution {
     public int minTotalDistance(int[][] grid) {
-        
+        if (grid == null || grid.length == 0) return 0;
+        List<Integer> row = new ArrayList<>();
+        List<Integer> col = new ArrayList<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    row.add(i);
+                    col.add(j);
+                }
+            }
+        }
+        return getDist(row) + getDist(col);
+    }
+
+    public int getDist(List<Integer> arr) {
+        Collections.sort(arr);
+        int i = 0;
+        int j = arr.size() - 1;
+        int res = 0;
+        while (i < j) {
+            res += arr.get(j--) - arr.get(i++);
+        }
+        return res;
     }
 }
