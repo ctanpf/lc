@@ -43,6 +43,16 @@
  */
 class Solution {
     public int maxRotateFunction(int[] A) {
-        
+        int sum = 0;
+        int res = 0;
+        int cur = 0;
+        for (int a : A) sum += a;
+        for (int i = 0; i < A.length; i++) cur += i * A[i];
+        res = cur;
+        for (int i = 1; i < A.length; i++) {
+            cur = cur + sum - (A.length * A[A.length - i]);
+            res = Math.max(res, cur);
+        }
+        return res;
     }
 }

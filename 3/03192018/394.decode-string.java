@@ -36,6 +36,29 @@
  */
 class Solution {
     public String decodeString(String s) {
-        
+        if (s == null || s.length() == 0) return "";
+        Stack<Integer> intSt = new Stack<>();
+        Stack<String> strSt = new Stack<>();
+        String res = "";
+        int count = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') count = 10 * count + (int)(c - '0');
+            else if (c == '[') {
+                strSt.push(res);
+                res = "";
+                intSt.push(count);
+                count = 0;
+            }
+            else if (c == ']') {
+                int val = intSt.pop();
+                String tmp = strSt.pop();
+                for (int j = 0; j < val; j++) tmp += res;
+                res = tmp;
+            }
+            else res += c;
+        }
+        return res;
     }
 }
