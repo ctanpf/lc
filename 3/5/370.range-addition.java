@@ -56,6 +56,17 @@
  */
 class Solution {
     public int[] getModifiedArray(int length, int[][] updates) {
-        
+        int[] res = new int[length];
+        int[] map = new int[length + 1];
+        for (int[] u : updates) {
+            map[u[0]] += u[2];
+            map[u[1] + 1] -= u[2];
+        }
+        int sum = 0;
+        for (int i = 0; i < length; i++) {
+            sum += map[i];
+            res[i] = sum;
+        }
+        return res;
     }
 }
