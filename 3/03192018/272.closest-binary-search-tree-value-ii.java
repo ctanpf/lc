@@ -35,7 +35,21 @@
  * }
  */
 class Solution {
+
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
-        
+        List<Integer> res = new ArrayList<>();
+        check(res, root, target, k);
+        return res;
+    }
+
+    public void check(List<Integer> res, TreeNode root, double target, int k) {
+        if (root == null) return;
+        check(res, root.left, target, k);
+        if (res.size() == k) {
+            if (Math.abs(target - root.val) < Math.abs(target - res.get(0))) res.remove(0);
+            else return;
+        }
+        res.add(root.val);
+        check(res, root.right, target, k);
     }
 }
