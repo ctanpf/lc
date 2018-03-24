@@ -50,6 +50,13 @@
  */
 class Solution {
     public int wiggleMaxLength(int[] nums) {
-        
+        if (nums == null || nums.length == 0) return 0;
+        int p = 1;
+        int q = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i - 1]) p = Math.max(p, q + 1);
+            else if (nums[i] < nums[i - 1]) q = Math.max(q, p + 1);
+        }
+        return Math.max(p, q);
     }
 }
