@@ -34,6 +34,7 @@
 class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         return sol(nums);
+        // return sol2(nums);
     }
 
     public List<List<Integer>> sol(int[] nums) {
@@ -51,10 +52,5 @@ class Solution {
             recur(res, tmp, nums, i + 1);
             tmp.remove(tmp.size() - 1);
         }
-    }
-
-    public List<List<Integer>> sol2(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        res.add(new ArrayList<>());
     }
 }
