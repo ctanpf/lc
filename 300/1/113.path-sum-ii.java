@@ -47,6 +47,20 @@
  */
 class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        check(root, res, new ArrayList<>(), sum);
+        return res;
+    }
+
+    public void check(TreeNode root, List<List<Integer>> res, List<Integer> tmp, int sum) {
+        if (root == null) return;
+        tmp.add(root.val);
+        if (root.left == null && root.right == null && root.val == sum) {
+            res.add(new ArrayList<>(tmp));
+        }
+        check(root.left, res, tmp, sum - root.val);
+        check(root.right, res, tmp, sum - root.val);
+        tmp.remove(tmp.size() - 1);
     }
 }
