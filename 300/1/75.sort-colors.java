@@ -38,6 +38,21 @@
  */
 class Solution {
     public void sortColors(int[] nums) {
-        
+        int i = 0;
+        int zero = 0;
+        int two = nums.length - 1;
+        while (i < nums.length) {
+            if (nums[i] == 0 && zero <= i) {
+                int tmp = nums[i];
+                nums[i++] = nums[zero];
+                nums[zero++] = tmp;
+            }
+            else if (nums[i] == 2 && two >= i) {
+                int tmp = nums[i];
+                nums[i] = nums[two];
+                nums[two--] = tmp;
+            }
+            else i++;
+        }
     }
 }
