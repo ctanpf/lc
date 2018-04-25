@@ -31,7 +31,6 @@
  * 1. So it is impossible.
  * 
  * Note:
- * 
  * The input prerequisites is a graph represented by a list of edges, not
  * adjacency matrices. Read more about how a graph is represented.
  * You may assume that there are no duplicate edges in the input
@@ -54,6 +53,31 @@
  */
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        
+        int[] edges = new int[numCourses];
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        for (int[] e : prerequisites) {
+            int in = e[0];
+            int out = e[1];
+            if (!map.containsKey(out)) map.put(out, new ArrayList<>());
+            map.get(out).add(in);
+            edges[in]++;
+        }
+        int count = 0;
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < edges.length; i++) {
+            if (edges[i] == 0) q.offer(i);
+        }
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            count++;
+            if (map.containsKey(node)) {
+                List<Integer> dep = map.get(node);
+                for (Integer i : dep) {
+                    edges[i]--;
+                    if (edges[i] == 0) q.offer(i);
+                }
+            }
+        }
+        return count == numCourses;   
     }
 }

@@ -32,6 +32,18 @@
  */
 class Solution {
     public int minSubArrayLen(int s, int[] nums) {
-        
+        if (nums == null || nums.length == 0) return 0;
+        int i = 0;
+        int j = 0;
+        int res = Integer.MAX_VALUE;
+        int cur = 0;
+        for (j = 0; j < nums.length; j++) {
+            cur += nums[j];
+            while (cur >= s) {
+                res = Math.min(res, j - i + 1);
+                cur -= nums[i++];
+            }
+        }
+        return res == Integer.MAX_VALUE ? 0 : res;
     }
 }
