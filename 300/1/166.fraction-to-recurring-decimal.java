@@ -32,5 +32,29 @@
  */
 class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
+        StringBuilder sb = new StringBuilder();
+        if (numerator == 0) return "0";
+        sb.append((numerator >= 0) ^ (denominator >= 0) ? "-" : "");
+        long num = Math.abs((long)numerator);
+        long den = Math.abs((long)denominator);
+        sb.append((long)num/den);
+        if (num%den == 0) return sb.toString();
+        sb.append(".");
+        num %= den;
+        HashMap<Long, Integer> map = new HashMap<>();
+        map.put(num, sb.length());
+        while (num != 0) {
+            num *= 10;
+            sb.append(num/den);
+            num %= den;
+            if (!map.containsKey(num)) map.put(num, sb.length());
+            else {
+                int idx = map.get(num);
+                sb.insert(idx, "(");
+                sb.append(")");
+                break;
+            }
+        }
+        return sb.toString();
     }
 }
