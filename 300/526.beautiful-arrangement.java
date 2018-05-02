@@ -43,7 +43,25 @@
  * 
  */
 class Solution {
+    int res = 0;
     public int countArrangement(int N) {
-        
+        check(N, 1, new int[N + 1], new boolean[N + 1]);
+        return res;
+    }
+
+    public void check(int N, int idx, int[] arr, boolean[] visited) {
+        if (idx == arr.length) {
+            res++;
+            return;
+        }
+        for (int i = 1; i <= N; i++) {
+            if (!visited[i]) {
+                if (i % idx == 0 || idx % i == 0) {
+                    visited[i] = true;
+                    check(N, idx + 1, arr, visited);
+                    visited[i] = false;
+                }
+            }
+        }
     }
 }

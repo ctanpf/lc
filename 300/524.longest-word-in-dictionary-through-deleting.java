@@ -47,6 +47,20 @@
  */
 class Solution {
     public String findLongestWord(String s, List<String> d) {
-        
+        Collections.sort(d, new Comparator<String>(){
+            @Override
+            public int compare(String a, String b) {
+                return a.length() == b.length() ? a.compareTo(b) : b.length() - a.length();
+            }
+        });        
+
+        for (String w : d) {
+            int idx = 0;
+            for (int i = 0; i < s.length(); i++) {
+                if (idx == s.length()) return w;
+                if (s.charAt(i) == w.charAt(idx)) idx++;
+            }
+        }
+        return "";
     }
 }
