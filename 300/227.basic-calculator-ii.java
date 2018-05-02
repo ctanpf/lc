@@ -34,6 +34,22 @@
  */
 class Solution {
     public int calculate(String s) {
-        
+        Stack<Integer> st = new Stack<>();
+        char op = '+';
+        int res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') res = 10 * res + (int)(c - '0');
+            if (c == '+' || c == '-' || c == '*' || c == '/' || i == s.length() - 1) {
+                if (op == '+') st.push(+res);
+                else if (op == '-') st.push(-res);
+                else if (op == '/') st.push(st.pop() / res);
+                else if (op == '*') st.push(st.pop() * res);
+                op = c;
+                res = 0;
+            }
+        }
+        while (!st.isEmpty()) res += st.pop();
+        return res;
     }
 }

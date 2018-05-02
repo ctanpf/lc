@@ -34,6 +34,54 @@
  */
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        
+        // return sol(root, k);
+        // return sol2(root, k);
+        return sol3(root, k);
+    }
+
+    public int sol(TreeNode root, int k) {
+        TreeNode cur = root;
+        int res = 0;
+        Stack<TreeNode> st = new Stack<>();
+        while (cur != null) {
+            st.push(cur);
+            cur = cur.left;
+        }
+
+        while (!st.isEmpty() && k > 0) {
+            --k;
+            TreeNode node = st.pop();
+            res = node.val;
+            TreeNode tmp = node.right;
+            while (tmp != null) {
+                st.push(tmp);
+                tmp = tmp.left;
+            }
+        }
+        return res;
+    }
+
+    public int sol2(TreeNode root, int k) {
+        return inorder(root, k);
+    }
+
+    public int inorder(TreeNode root, int k) {
+        if (root == null) return -1;
+        int val = inorder(root.left, k);
+        if (k == 0) return val;
+        if (--k == 0) return root.val;
+        return inorder(root.right, k);
+    }
+
+    public int sol3(TreeNode root, int k) {
+        int count = count(root.left);
+        if (k <= count) return sol3(root.left, k);
+        if (k > count + 1) return sol3(root.right, k - count - 1);
+        return root.val;
+    }
+
+    public int count(TreeNode root) {
+        if (root == null) return 0;
+        return 1 + count(root.left) + count(root.right);
     }
 }

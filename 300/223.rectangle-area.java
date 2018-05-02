@@ -26,6 +26,10 @@
  */
 class Solution {
     public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
-        
+        int a1 = Math.abs(C - A) * Math.abs(D - B);
+        int a2 = Math.abs(G - E) * Math.abs(H - F);
+        if (E >= C || F >= D || B >= H || A >= G) return a1 + a2;
+        int a3 = (Math.min(C, G) - Math.max(E, A)) * (Math.min(D, H) - Math.max(F, B));
+        return a1 + a2 - a3;
     }
 }

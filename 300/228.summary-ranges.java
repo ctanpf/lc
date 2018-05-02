@@ -32,6 +32,18 @@
  */
 class Solution {
     public List<String> summaryRanges(int[] nums) {
-        
+        List<String> res = new ArrayList<>();
+        for (int j = 0; j < nums.length; j++) {
+            int i = j;
+            while (j + 1 < nums.length && nums[j] + 1 == nums[j + 1]) {
+                j++;
+            }
+            res.add(str(nums[i], nums[j]));
+        }
+        return res;
+    }
+
+    public String str(int a, int b) {
+        return a == b ? String.valueOf(a) : String.format("%s->%s", a, b);
     }
 }
