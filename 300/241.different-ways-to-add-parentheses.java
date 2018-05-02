@@ -33,6 +33,22 @@
  */
 class Solution {
     public List<Integer> diffWaysToCompute(String input) {
-        
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c == '+' || c == '-' || c == '*') {
+                List<Integer> l = diffWaysToCompute(input.substring(0, i));
+                List<Integer> r = diffWaysToCompute(input.substring(i + 1));
+                for (Integer a : l) {
+                    for (Integer b : r) {
+                        if (c == '+') res.add(a + b);
+                        else if (c == '-') res.add(a - b);
+                        else if (c == '*') res.add(a * b);
+                    }
+                }
+            }
+        } 
+        if (res.size() == 0) res.add(Integer.parseInt(input));
+        return res;       
     }
 }
