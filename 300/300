@@ -170,7 +170,7 @@
     ✔ [338] Counting Bits                                                Medium (62.20 %)
     ✔ [341] Flatten Nested List Iterator                                 Medium (43.12 %)
     ✔ [343] Integer Break                                                Medium (46.49 %)
-    ✔ [347] Top K Frequent Elements                                      Medium (49.59 %)
+👌    ✔ [347] Top K Frequent Elements                                      Medium (49.59 %)
   🔒 ✔ [348] Design Tic-Tac-Toe                                           Medium (45.94 %)
   🔒 ✔ [351] Android Unlock Patterns                                      Medium (44.68 %)
   🔒   [353] Design Snake Game                                            Medium (27.26 %)
